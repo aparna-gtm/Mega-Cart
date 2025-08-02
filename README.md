@@ -34,16 +34,16 @@
 
 ---
 
-## 🗂️ Folder Structure
-
+🗂️ Folder Structure
 megacart/
-├── public/ # Static assets (images, stylesheets, JS)
-├── routes/ # Express routes (products, cart, etc.)
-├── views/ # HTML or EJS templates
-├── controllers/ # Route logic (if modularized)
-├── models/ # MongoDB models (if used)
-├── .env # Environment variables (merchant key, DB URI)
-├── .gitignore # To exclude sensitive files from Git
-├── package.json # Project metadata and dependencies
-├── server.js / app.js # Main entry point
-└── README.md # You're here!
+├── public/           #  For static assets like images, CSS, and client-side JS
+├── routes/           #  Contains route files (e.g., productRoutes.js, cartRoutes.js)
+├── views/            #  Holds EJS or HTML templates (if using EJS as view engine)
+├── controllers/      #  Logic separated from routes (helps modularity)
+├── models/           #  MongoDB/Mongoose schemas (like Product.js, User.js)
+├── .env              #  Environment variables (keep this in .gitignore)
+├── .gitignore        #  Add node_modules/, .env, and other sensitive files here
+├── package.json      #  Project metadata, scripts, and dependencies
+├── server.js / app.js#  Main entry point (usually where Express is set up)
+└── README.md         #  Describes the project and setup instructions
+
