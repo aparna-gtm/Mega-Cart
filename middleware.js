@@ -46,21 +46,23 @@ const isSeller=(req,res,next)=>{
     }
     next();
 }
-const isProductAuthor= async(req,res,next)=>{
-    
-    let {id}=req.params;
-    let product= await Product.findById(id);
+const isProductAuthor = async (req, res, next) => {
+    let { id } = req.params;
+    let product = await Product.findById(id);
 
-    if(product.author===undefined){
-        req.flash('error',"You are not authorised to do that")
-    }
-
-    if(!product.author.equals(req.user._id)){
-        req.flash('error',"You are not authorised to do that")
+    if (!product || !product.author) {
+        req.flash('error', "You are not authorised to do that");
         return res.redirect('/products');
     }
+
+    if (!product.author.equals(req.user._id)) {
+        req.flash('error', "You are not authorised to do that");
+        return res.redirect('/products');
+    }
+
     next();
 }
+
 
 
 
