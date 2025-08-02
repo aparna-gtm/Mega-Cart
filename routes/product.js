@@ -16,7 +16,7 @@ router.get('/products',async (req, res) => {  // get req /products pr jayegi
         res.render('products/index', { products });
     }
     catch (err) {
-        res.status(500).render('error', { err: e.message });
+        res.status(500).render('error', { err: err.message });
     }
 })
 
@@ -28,7 +28,7 @@ router.get('/product/new', isLoggedin,(req, res) => {
         res.render('products/new');
     }
     catch (err) {
-        res.status(500).render('error', { err: e.message });
+        res.status(500).render('error', { err: er.message });
     }
 })
 
@@ -42,7 +42,7 @@ router.post('/products',validateProduct,isLoggedin,isSeller, async (req, res) =>
         res.redirect('/products') //redirect mtlb get req
     }
     catch (err) {
-        res.status(500).render('error', { err: e.message });
+        res.status(500).render('error', { err: err.message });
     }
 })
 
@@ -67,7 +67,7 @@ router.get('/products/:id/edit',isLoggedin, async (req, res) => {
         res.render('products/edit', { foundProduct });
     }
     catch (err) {
-        res.status(500).render('error', { err: e.message });
+        res.status(500).render('error', { err: err.message });
     }
 })
 
@@ -82,7 +82,7 @@ router.patch('/products/:id',validateProduct,isLoggedin,isSeller, async (req, re
         res.redirect(`/products/${id}`)
     }
     catch (err) {
-        res.status(500).render('error', { err: e.message });
+        res.status(500).render('error', { err: err.message });
     }
 })
 
@@ -96,7 +96,7 @@ router.delete('/products/:id', isLoggedin,isProductAuthor,async (req, res) => {
         res.redirect('/products');
     }
     catch (err) {
-        res.status(500).render('error', { err: e.message });
+        res.status(500).render('error', { err: err.message });
     }
 })
 
