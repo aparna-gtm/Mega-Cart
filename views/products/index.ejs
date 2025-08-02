@@ -1,0 +1,91 @@
+<% layout("layouts/boilerPlate.ejs") %>
+<%- include('../partials/navbar'); %>
+<%- include('../partials/flash'); %>
+
+<style>
+  body {
+    padding-top: 80px;
+    background-color: #e6f2ff;
+  }
+
+  .like-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 6px 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+
+  .like-btn i {
+    color: #ff4d4d;
+  }
+
+  .like-btn:hover {
+    background-color: #ffe6e6;
+  }
+</style>
+
+<div class="container mt-4">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <% for(let item of products) { %>
+      <div class="col">
+        <div class="card h-100 shadow rounded position-relative">
+
+          <!-- Like Button (Floating top-right) -->
+          <span class="btn like-btn" product-id="<%= item._id %>">
+            <%if(currentUser && currentUser.wishList.includes(item._id)){%>
+              <i class="fas fa-heart"></i>
+            <%}else{%>
+              <i class="far fa-heart"></i>
+            <%}%>
+          </span>
+
+          <!-- Product Image -->
+          <img src="<%= item.img %>" class="card-img-top p-2" alt="Product Image"
+            style="object-fit: contain; height: 220px; width: 100%; background-color: white;">
+
+          <!-- Rating -->
+          <div class="position-absolute top-0 start-0 m-2 px-2 py-1 bg-dark text-light rounded">
+            <i class="fa-solid fa-star text-warning"></i> <%= item.avgRating.toFixed(1) %> | <%= item.reviews.length %>
+          </div>
+
+          <!-- Card Body -->
+          <div class="card-body bg-light d-flex flex-column justify-content-between">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="card-title mb-1"><%= item.name %></h5>
+              <!-- Optional second heart (can remove if not needed) -->
+              <!-- <i class="fa-regular fa-heart fa-lg me-1" style="cursor: pointer;"></i> -->
+            </div>
+
+            <h6 class="text-primary fw-bold">₹ <%= item.price %></h6>
+            <p class="card-text text-muted mb-1"><%= item.des %></p>
+            <p class="card-text text-muted"><%= item.reviews.length %> reviews</p>
+
+            <a href="/products/<%= item._id %>" class="btn btn-primary w-100 mb-2">View Product</a>
+
+            <% if (
+              currentUser &&
+              currentUser._id &&
+              item.seller &&
+              item.seller._id &&
+              currentUser._id.toString() === item.seller._id.toString()
+            ) { %>
+              <form action="/products/<%= item._id %>?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-danger w-100">Delete Product</button>
+              </form>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+
+
+<script src="/js/common.js"></script>
+</body>
+</html>

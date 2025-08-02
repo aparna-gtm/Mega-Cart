@@ -1,0 +1,11 @@
+<% layout("layouts/boilerPlate.ejs") %>
+<%- include('./partials/navbar'); %>
+
+<div class="alert alert-danger" role="alert" style="margin-top: 70px;">
+    <h1>Error Occurred</h1>
+    <% if (typeof err !== 'undefined') { %>
+      <p><%= err %></p>
+    <% } else { %>
+      <p>Something went wrong.</p>
+    <% } %>
+</div>

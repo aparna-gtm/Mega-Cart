@@ -1,0 +1,40 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold text-white" href="#">BlueBrand</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+      aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active text-white" aria-current="page" href="/products">Home</a>
+        </li>
+        <%if(currentUser && currentUser.role==='seller'){%>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/product/new">Add new Product</a>
+          </li>
+        <%}%>
+      </ul>
+
+      <!-- Login & Signup Buttons -->
+      <div class="d-flex align-items-center">
+        <% if(!currentUser){%>
+          <a href="/login" class="btn btn-light me-2">Login</a>
+
+        <%} else {%>
+        <a href="#" class="nav-link">Hello, <%=currentUser.username%></a>
+
+        <a href="/user/cart" class="btn btn-outline-light me-2" style=" border: none">
+          <i class="bi bi-cart-fill" style="color: black; font-size: 1.2rem"></i>
+          <sup><span class="badge bg-danger"><%=currentUser.cart.length%></span></sup>
+        </a>
+
+        <a href="/logout" class="btn btn-light">Logout</a>
+        <%}%>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,199 @@
+<% layout("layouts/boilerPlate.ejs") %>
+  <%- include('../partials/navbar'); %>
+    <%- include('../partials/flash'); %>
+
+
+      <style>
+        body {
+          padding-top: 70px;
+          background-color: #e6f2ff;
+        }
+
+        .product-card {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          background-color: #f0f8ff;
+          border: 1px solid #cce0ff;
+          border-radius: 10px;
+          transition: box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-img {
+          height: 200px;
+          width: 100%;
+          object-fit: contain;
+          background-color: #ffffff;
+          border-bottom: 1px solid #cce0ff;
+          padding: 10px;
+        }
+
+        .product-body {
+          flex: 1;
+          padding: 1rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+
+        .product-price {
+          color: #003366;
+          font-weight: bold;
+          font-size: 1.1rem;
+        }
+
+        .btn-view {
+          background-color: #66b3ff;
+          color: #fff;
+          font-weight: 500;
+          border: none;
+          transition: background-color 0.2s ease;
+        }
+
+        .btn-view:hover {
+          background-color: #3399ff;
+        }
+
+        .review-card {
+          background-color: #ffffff;
+          border-left: 5px solid #3399ff;
+          margin-bottom: 15px;
+        }
+
+        .review-header {
+          color: #003366;
+          font-size: 1.2rem;
+          font-weight: 500;
+        }
+
+        @media (max-width: 576px) {
+          .product-img {
+            height: 160px;
+          }
+        }
+      </style>
+
+      <div class="container mt-4">
+        <div class="row align-items-start">
+
+          <!-- Flash Message Display -->
+
+          <!-- Product Section -->
+          <div class="col-12 col-sm-6 col-md-4 mb-4 d-flex align-items-stretch">
+            <div class="card product-card shadow-sm mx-auto h-100">
+              <img src="<%= foundProduct.img %>" alt="Product Image" class="product-img" />
+              <div class="product-body">
+                <div>
+                  <h5 class="card-title">
+                    <%= foundProduct.name %>
+                  </h5>
+                  <p class="product-price">₹ <%= foundProduct.price %>
+                  </p>
+                  <p class="text-muted">
+                    <%= foundProduct.des %>
+                  </p>
+                </div>
+                <form method="POST" , action="/user/<%= foundProduct._id%>/add">
+                  <button type="submit" class="btn btn-success mt-2 w-100 fw-medium">
+                    <i class="bi bi-cart-plus-fill"></i> Add to Cart
+                  </button>
+                </form>
+
+                <a href="#" class="btn btn-primary w-100 fw-medium mb-2 mt-2">
+                  <i class="bi bi-bag-check-fill"></i> Buy Product
+                </a>
+
+                <% if (currentUser && currentUser.role==='seller' ) { %>
+                  <a href="/products/<%= foundProduct._id %>/edit" class="btn btn-warning w-100 fw-medium text-dark">
+                    <i class="bi bi-pencil-square"></i> Edit Product
+                  </a>
+                <% } %>
+              </div>
+            </div>
+          </div>
+
+          <!-- Leave a Review Form -->
+          <div class="col-lg-6 d-flex flex-column">
+            <div class="card shadow-sm w-100 h-100">
+              <div class="card-body">
+                <h3 class="card-title text-center mb-4">Leave a Review</h3>
+                <form action="/products/<%= foundProduct._id %>/review" method="POST">
+                  <div class="mb-3">
+                    <fieldset class="starability-basic">
+                      <legend> Rating:</legend>
+                      <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked
+                        aria-label="No rating." />
+                      <fieldset class="starability-basic">
+
+                        <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked
+                          aria-label="No rating." />
+                        <input type="radio" id="first-rate1" name="rating" value="1" />
+                        <label for="first-rate1" title="Terrible">1 star</label>
+                        <input type="radio" id="first-rate2" name="rating" value="2" />
+                        <label for="first-rate2" title="Not good">2 stars</label>
+                        <input type="radio" id="first-rate3" name="rating" value="3" />
+                        <label for="first-rate3" title="Average">3 stars</label>
+                        <input type="radio" id="first-rate4" name="rating" value="4" />
+                        <label for="first-rate4" title="Very good">4 stars</label>
+                        <input type="radio" id="first-rate5" name="rating" value="5" />
+                        <label for="first-rate5" title="Amazing">5 stars</label>
+                      </fieldset>
+                  </div>
+                  <div class="mb-3">
+                    <label for="comment" class="form-label"> Your Comments Here:</label>
+                    <textarea class="form-control" id="comment" name="comment" rows="4"
+                      placeholder="Write your review..."></textarea>
+                  </div>
+                  <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Add Review</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- End Review Form -->
+        </div>
+
+        <!-- All Reviews Section -->
+        <div class="row mt-5">
+          <div class="col-12">
+            <h3 class="text-center mb-4">Customer Reviews</h3>
+
+            <% if (foundProduct.reviews.length===0) { %>
+              <p class="text-muted text-center">
+                No reviews yet. Be the first to review!
+              </p>
+              <% } else { %>
+                <% for (let review of foundProduct.reviews) { %>
+                  <div class="card review-card shadow-sm">
+                    <div class="card-body">
+                      <% if (review.createdAt) { %>
+                        <p>Updated: <%= review.createdAt.toDateString() %>
+                        </p>
+                        <% } %>
+                          <p class="starability-result" data-rating="<%=review.rating%>">
+                            Rating :<%=review.rating%>
+                          </p>
+                          <p class="card-text">
+                            <strong>Comment:</strong>
+                            <%= review.comment %><br>
+
+                          </p>
+
+
+
+                          <a href="#" class="btn btn-danger btn-sm d-inline-flex align-items-center gap-1 px-3 py-1">
+                            <i class="bi bi-trash-fill"></i> Delete Review </a>
+
+                    </div>
+                  </div>
+                  <% } %>
+                    <% } %>
+          </div>
+        </div>
+      </div>
