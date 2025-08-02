@@ -94,6 +94,9 @@ app.use(cartRoutes);
 app.use(productApi);
 
 
+app.get('/', (req, res) => {
+  res.redirect('/products');
+});
 
 
 
