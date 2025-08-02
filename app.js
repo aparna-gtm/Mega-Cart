@@ -16,8 +16,8 @@ mongoose.connect(process.env.MONGO_URI, {
 
 const express=require('express');
 let app=express();
-// const path=require('path');
-const mongoose = require('mongoose');
+const path=require('path');
+// const mongoose = require('mongoose');
 const seedDB=require('./seed');
 const ejsMate=require('ejs-mate');
 const methodOverride = require('method-override');
