@@ -27,7 +27,7 @@ const passport=require('passport');
 const localStrategy=require('passport-local');
 const User=require('./models/User');
 
-const dbURL=process.env.dbURL || 'mongodb://localhost:27017/SHOOPING-APP'
+
 
 mongoose.set('strictQuery',true);
 
