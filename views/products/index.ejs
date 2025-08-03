@@ -69,9 +69,9 @@
             <% if (
               currentUser &&
               currentUser._id &&
-              item.seller &&
-              item.seller._id &&
-              currentUser._id.toString() === item.seller._id.toString()
+              item.author &&
+              item.author._id &&
+              currentUser._id.toString() === item.author._id.toString()
             ) { %>
               <form action="/products/<%= item._id %>?_method=DELETE" method="POST">
                 <button type="submit" class="btn btn-danger w-100">Delete Product</button>

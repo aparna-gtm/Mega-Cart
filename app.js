@@ -6,7 +6,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
@@ -32,14 +32,11 @@ const dbURL=process.env.dbURL || 'mongodb://localhost:27017/SHOOPING-APP'
 mongoose.set('strictQuery',true);
 
 
-mongoose.connect(dbURL)
-.then(()=>{
-    console.log("DB connected successfully");
-})
-.catch((err)=>{
-    console.log("Error in connecting DB");
-    console.log(err);
-})
+//const mongoose = require('mongoose');
+
+
+
+
 
 const productRoutes = require('./routes/product');
 const reviewRoutes = require('./routes/review');

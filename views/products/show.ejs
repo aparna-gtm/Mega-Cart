@@ -108,7 +108,7 @@
                   <i class="bi bi-bag-check-fill"></i> Buy Product
                 </a>
 
-                <% if (currentUser && currentUser.role==='seller' ) { %>
+                <% if (currentUser && currentUser.role === 'seller' && foundProduct.seller && foundProduct.seller._id.toString() === currentUser._id.toString()) { %>
                   <a href="/products/<%= foundProduct._id %>/edit" class="btn btn-warning w-100 fw-medium text-dark">
                     <i class="bi bi-pencil-square"></i> Edit Product
                   </a>

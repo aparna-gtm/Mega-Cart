@@ -35,7 +35,8 @@ const isLoggedin = (req, res, next) => {
 const isSeller=(req,res,next)=>{
     
     if(!req.user.role){
-        req.flash('error',"You do not have the permission to do that")
+        req.flash('error',"You do not have the permission to do that");
+        
         return res.redirect('/products');
         
     }
@@ -52,6 +53,7 @@ const isProductAuthor = async (req, res, next) => {
 
     if (!product || !product.author) {
         req.flash('error', "You are not authorised to do that");
+        console.log("Checking author:", product?.author, "Logged-in user:", req.user._id);
         return res.redirect('/products');
     }
 

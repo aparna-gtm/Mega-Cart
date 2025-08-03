@@ -60,7 +60,7 @@ router.get('/products/:id', isLoggedin,async (req, res) => {
 
 
 // form to edit a product
-router.get('/products/:id/edit',isLoggedin, async (req, res) => {
+router.get('/products/:id/edit',isLoggedin,isProductAuthor,isSeller, async (req, res) => {
     try {
         let { id } = req.params;
         let foundProduct = await Product.findById(id);
@@ -72,7 +72,7 @@ router.get('/products/:id/edit',isLoggedin, async (req, res) => {
 })
 
 // to acturally edit the data in db
-router.patch('/products/:id',validateProduct,isLoggedin,isSeller, async (req, res) => {
+router.patch('/products/:id',validateProduct,isLoggedin,isSeller,isProductAuthor, async (req, res) => {
     try {
         let { id } = req.params;
         // req.body me humko faorm ka naya bhara hua maal milega
